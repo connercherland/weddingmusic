@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Conner Cherland -- Wedding Music Quote</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:#faf9f7;color:#1a1a1a;min-height:100vh;padding:2rem 1rem;}
+.wq{max-width:580px;margin:0 auto;}
+.brand{font-family:'Playfair Display',serif;font-size:24px;font-weight:400;color:#1a1a1a;margin-bottom:4px;}
+.sub{font-size:13px;color:#888;margin-bottom:1.75rem;}
+.prog-wrap{height:2px;background:#e8e4de;border-radius:2px;margin-bottom:2.5rem;overflow:hidden;}
+.prog-bar{height:100%;background:#B4956A;border-radius:2px;transition:width .4s ease;}
+.step{display:none;}.step.active{display:block;}
+.slabel{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#999;margin-bottom:6px;}
+.qq{font-family:'Playfair Display',serif;font-size:26px;font-weight:400;color:#1a1a1a;margin-bottom:1.25rem;line-height:1.4;}
+.field{width:100%;font-family:'DM Sans',sans-serif;font-size:17px;padding:12px 14px;border:1px solid #ddd;border-radius:8px;background:#fff;color:#1a1a1a;outline:none;display:block;margin-bottom:10px;}
+.field:focus{border-color:#B4956A;box-shadow:0 0 0 3px rgba(180,149,106,.15);}
+.opts{display:flex;flex-direction:column;gap:8px;}
+.opt{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border:1px solid #e0dbd4;border-radius:8px;cursor:pointer;transition:border-color .15s,background .15s;background:#fff;}
+.opt:hover{border-color:#c8b89a;background:#fdf9f5;}
+.opt.sel{border-color:#B4956A;background:rgba(180,149,106,.07);}
+.opt input{accent-color:#B4956A;width:16px;height:16px;flex-shrink:0;margin-top:2px;}
+.opt-title{font-size:16px;color:#1a1a1a;font-weight:500;}
+.opt-sub{font-size:14px;color:#888;margin-top:3px;line-height:1.4;}
+.opt-price{font-size:14px;color:#B4956A;margin-top:4px;font-weight:500;}
+.opt-popular{display:inline-block;font-size:11px;background:#B4956A;color:#fff;padding:2px 8px;border-radius:10px;margin-bottom:4px;}
+.cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.cat-card{border:1px solid #e0dbd4;border-radius:12px;padding:1.25rem 1rem;cursor:pointer;transition:border-color .15s,background .15s;text-align:center;background:#fff;}
+.cat-card:hover{border-color:#c8b89a;background:#fdf9f5;}
+.cat-card.sel{border-color:#B4956A;background:rgba(180,149,106,.07);}
+.cat-card input{display:none;}
+.cat-icon{font-size:22px;margin-bottom:8px;}
+.cat-title{font-size:15px;font-weight:500;color:#1a1a1a;}
+.cat-sub{font-size:11px;color:#888;margin-top:3px;line-height:1.4;}
+.instr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;}
+.ichip{border:1px solid #e0dbd4;border-radius:8px;padding:9px 12px;cursor:pointer;transition:border-color .15s,background .15s;display:flex;align-items:center;gap:8px;background:#fff;}
+.ichip:hover{border-color:#c8b89a;background:#fdf9f5;}
+.ichip.sel{border-color:#B4956A;background:rgba(180,149,106,.07);}
+.ichip input{accent-color:#B4956A;width:14px;height:14px;flex-shrink:0;}
+.ichip-label{font-size:13px;color:#1a1a1a;}
+.conner-row{display:flex;align-items:center;gap:10px;padding:9px 12px;border:1px solid #B4956A;border-radius:8px;background:rgba(180,149,106,.07);margin-bottom:10px;}
+.conner-name{font-size:13px;color:#1a1a1a;}
+.conner-badge{font-size:11px;color:#8a6430;background:rgba(180,149,106,.2);padding:2px 7px;border-radius:10px;margin-left:auto;}
+.band-sum{font-size:13px;color:#888;margin-top:10px;min-height:18px;}
+.btns{display:flex;gap:8px;margin-top:1.5rem;align-items:center;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:11px 22px;background:#B4956A;color:#fff;border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:opacity .15s;}
+.btn:hover{opacity:.88;}.btn:disabled{opacity:.4;cursor:not-allowed;}
+.btn-g{background:transparent;color:#888;border:1px solid #ddd;}
+.btn-g:hover{background:#f5f2ee;opacity:1;}
+.btn-ns{background:transparent;color:#888;border:none;font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;padding:0;text-decoration:underline;text-underline-offset:3px;}
+.btn-ns:hover{color:#1a1a1a;}
+.err{font-size:13px;color:#c0392b;margin-top:8px;display:none;}
+.loading{font-size:13px;color:#888;margin-top:8px;display:none;}
+.sched{margin-top:1.25rem;font-size:14px;color:#888;}
+.sched a{color:#B4956A;text-underline-offset:3px;font-weight:500;}
+.sched a:hover{color:#8a6430;}
+.unavail{background:#fdf0f0;border:1px solid #f5c6c6;border-radius:8px;padding:12px 16px;font-size:13px;color:#c0392b;margin-top:10px;display:none;}
+.qcard{border:1px solid #e0dbd4;border-radius:12px;padding:1.5rem;background:#fff;}
+.qprice{font-family:'Playfair Display',serif;font-size:38px;font-weight:400;color:#1a1a1a;margin-bottom:4px;}
+.qpkg{font-size:14px;color:#888;margin-bottom:1.25rem;}
+.qdiv{border:none;border-top:1px solid #ede9e3;margin:1rem 0;}
+.ilabel{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#aaa;margin-bottom:8px;}
+.iitem{font-size:14px;color:#1a1a1a;padding:3px 0;display:flex;gap:8px;align-items:flex-start;}
+.idot{width:4px;height:4px;border-radius:50%;background:#B4956A;flex-shrink:0;margin-top:6px;}
+.zpill{display:inline-block;font-size:12px;padding:3px 10px;border-radius:20px;background:rgba(180,149,106,.12);color:#8a6430;margin-bottom:1rem;}
+.qnote{font-size:14px;color:#888;margin-top:1rem;line-height:1.5;}
+.cta-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:1.25rem;}
+.cta-lnk{font-size:13px;color:#888;text-decoration:underline;text-underline-offset:3px;cursor:pointer;background:none;border:none;font-family:'DM Sans',sans-serif;}
+.lrow{display:flex;gap:16px;flex-wrap:wrap;margin-top:1rem;}
+.elink{font-size:13px;color:#B4956A;text-decoration:none;display:flex;align-items:center;gap:5px;}
+.elink:hover{text-decoration:underline;}
+.ns-card{border:1px solid #e0dbd4;border-radius:12px;padding:1.5rem;background:#fff;}
+.ns-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:400;color:#1a1a1a;margin-bottom:.5rem;}
+.ns-body{font-size:14px;color:#888;line-height:1.6;margin-bottom:1.25rem;}
+.ns-btns{display:flex;flex-direction:column;gap:10px;}
+.btn-cal{display:flex;align-items:center;justify-content:center;padding:12px 22px;background:#B4956A;color:#fff;border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;text-decoration:none;width:100%;}
+.btn-cal:hover{opacity:.88;}
+.btn-tl{display:flex;align-items:center;justify-content:center;padding:12px 22px;background:transparent;color:#1a1a1a;border:1px solid #ddd;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;text-decoration:none;width:100%;}
+.btn-tl:hover{background:#f5f2ee;}
+.btn-back-ns{background:none;border:none;font-family:'DM Sans',sans-serif;font-size:13px;color:#888;cursor:pointer;text-decoration:underline;text-underline-offset:3px;margin-top:.75rem;padding:0;display:block;}
+.adm-wrap{border:1px solid #e0dbd4;border-radius:12px;padding:1.25rem;margin-top:2rem;background:#fff;}
+.adm-title{font-size:13px;font-weight:500;color:#888;margin-bottom:1rem;}
+.dlist{display:flex;flex-direction:column;gap:6px;margin-bottom:1rem;max-height:200px;overflow-y:auto;}
+.ditem{display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:6px 10px;border:1px solid #e0dbd4;border-radius:8px;color:#1a1a1a;}
+.ddel{background:none;border:none;cursor:pointer;font-size:16px;color:#aaa;padding:0 4px;}
+.ddel:hover{color:#c0392b;}
+.btn-addon{display:block;width:100%;text-align:left;padding:12px 16px;border:1px solid #e0dbd4;border-radius:8px;background:#fff;font-family:'DM Sans',sans-serif;font-size:14px;color:#1a1a1a;cursor:pointer;transition:border-color .15s,background .15s;}
+.btn-addon:hover{border-color:#B4956A;background:rgba(180,149,106,.05);}
+.adm-tog{font-size:12px;color:#aaa;text-decoration:underline;cursor:pointer;margin-top:2rem;display:inline-block;background:none;border:none;font-family:'DM Sans',sans-serif;}
+</style>
+</head>
+<body>
+<div class="wq">
+  <div class="brand">Conner Cherland</div>
+  <p class="sub">Wedding music &mdash; get your instant quote</p>
+  <div class="prog-wrap"><div class="prog-bar" id="prog" style="width:0%"></div></div>
+
+  <div class="step active" id="s0">
+    <p class="slabel">Let's get started</p>
+    <p class="qq">What's your name, email, and phone number?</p>
+    <input class="field" id="f-name" type="text" placeholder="Your name" autocomplete="given-name" />
+    <input class="field" id="f-email" type="email" placeholder="Email address" autocomplete="email" />
+    <input class="field" id="f-phone" type="tel" placeholder="Phone number" autocomplete="tel" />
+    <p class="err" id="e0">Please fill in all three fields.</p>
+    <div class="btns"><button class="btn" onclick="go0()">Continue &rarr;</button></div>
+    <p class="sched"><a href="https://calendly.com/connercherland/phone-call" target="_blank">Schedule a free call with Conner &rarr;</a></p>
+  </div>
+
+  <div class="step" id="s1">
+    <p class="slabel">Step 1 of 5</p>
+    <p class="qq">What kind of music are you looking for?</p>
+    <div class="cat-grid">
+      <label class="cat-card" id="cc-live"><input type="checkbox" name="cat" value="live" onchange="selCat(this)"><div class="cat-icon">&#127928;</div><div class="cat-title">Solo acoustic</div><div class="cat-sub">Conner performing solo</div></label>
+      <label class="cat-card" id="cc-dj"><input type="checkbox" name="cat" value="dj" onchange="selCat(this)"><div class="cat-icon">&#127911;</div><div class="cat-title">DJ / emcee</div><div class="cat-sub">Full DJ and MC coverage</div></label>
+      <label class="cat-card" id="cc-band"><input type="checkbox" name="cat" value="band" onchange="selCat(this)"><div class="cat-icon">&#127929;</div><div class="cat-title">Live band</div><div class="cat-sub">Duo, trio, or full ensemble</div></label>
+    </div>
+    <p class="err" id="e1">Please select at least one.</p>
+    <div class="btns">
+      <button class="btn btn-g" onclick="show('s0')">&larr;</button>
+      <button class="btn" onclick="go1()">Continue &rarr;</button>
+      <button class="btn-ns" onclick="ns(1)">Not sure</button>
+    </div>
+    <p class="sched">Not sure? <a href="https://calendly.com/connercherland/phone-call" target="_blank">Schedule a free call with Conner &rarr;</a></p>
+  </div>
+
+  <div class="step" id="s2">
+    <p class="slabel">Step 2 of 5 - Solo acoustic</p>
+    <p class="qq">Which parts of the day would you like Conner to perform solo?</p>
+    <p style="font-size:13px;background:rgba(180,149,106,.12);color:#8a6430;display:inline-block;padding:4px 12px;border-radius:20px;margin-bottom:12px;">Most couples book ceremony + cocktail hour</p>
+    <div class="opts">
+      <label class="opt" id="solo-cer-opt">
+        <input type="checkbox" name="solo-parts" value="cer" onchange="selCat(this)" />
+        <div><div class="opt-title">Ceremony</div><div class="opt-sub">Live music for your processional, recessional, and as guests arrive</div></div>
+      </label>
+      <label class="opt" id="solo-cock-opt">
+        <input type="checkbox" name="solo-parts" value="cock" onchange="selCat(this)" />
+        <div><div class="opt-title">Cocktail hour</div><div class="opt-sub">Live performance while guests mingle - guitar, looping, and more</div></div>
+      </label>
+      <label class="opt" id="solo-din-opt">
+        <input type="checkbox" name="solo-parts" value="din" onchange="selCat(this)" />
+        <div><div class="opt-title">Dinner music</div><div class="opt-sub">Live background music during the meal</div></div>
+      </label>
+    </div>
+    <p class="err" id="e2">Please select at least one.</p>
+    <div class="btns">
+      <button class="btn btn-g" onclick="show('s1')">&larr;</button>
+      <button class="btn" onclick="go2()">Continue &rarr;</button>
+      <button class="btn-ns" onclick="ns(2)">Not sure</button>
+    </div>
+    <p class="sched">Not sure? <a href="https://calendly.com/connercherland/phone-call" target="_blank">Schedule a free call with Conner &rarr;</a></p>
+  </div>
+
+  <div class="step" id="s2-solo">
+    <p class="slabel">Solo acoustic package</p>
+    <p class="qq">Which solo acoustic package?</p>
+    <div class="opts" id="solo-pkg-opts"></div>
+    <p class="err" id="e2-solo">Please select a package.</p>
+    <div class="btns">
+      <button class="btn btn-g" onclick="show('s1')">&larr;</button>
+      <button class="btn" onclick="goSoloPkg()">Continue &rarr;</button>
+      <button class="btn-ns" onclick="ns('2-solo')">Not sure</button>
+    </div>
+    <p class="sched">Not sure? <a href="https://calendly.com/connercherland/phone-call" target="_blank">Schedule a free call with Conner &rarr;</a></p>
+  </div>
+
+  <div class="step" id="s2-dj">
+    <p class="slabel">DJ / emcee services</p>
+    <p class="qq">Which parts of the day would you like DJ coverage?</p>
+    <div class="opts" id="dj-parts-opts"></div>
+    <p class="err" id="e2-dj">Please select at least one.</p>
+    <div class="btns">
+      <button class="btn btn-g" onclick="backDJStep()">&larr;</button>
+      <button class="btn" onclick="goDJParts()">Continue &rarr;</button>
+      <button class="btn-ns" onclick="ns('2-dj')">Not sure</button>
+    </div>
+    <p class="sched">Not sure? <a href="https://calendly.com/connercherland/phone-call" target="_blank">Schedule a free call with Conner &rarr;</a></p>
+  </div>
+
+  <div class="step" id="s2b">
+    <p class="slabel">Step 2 of 5</p>
+    <p class="qq">Build your band.</p>
+    <p style="font-size:13px;color:#888;margin-bottom:8px;">Conner leads every ensemble on acoustic guitar. Select the additional musicians you'd like.</p>
+    <p style="font-size:13px;background:rgba(180,149,106,.1);border:1px solid rgba(180,149,106,.3);border-radius:8px;padding:10px 14px;color:#6b4f2a;margin-bottom:12px;">If you'd like the band to cover the reception, you'll need to include bass, drums, and at least one additional instrument.</p>
+    <div class="conner-row"><span class="conner-name">Conner -- acoustic guitar / vocals</span><span class="conner-badge">always included</span></div>
+    <div class="instr-grid" id="instr-grid"></div>
+    <div class="band-sum" id="band-sum"></div>
+    <p class="err" id="e2b">Please select at least one additional instrument.</p>
+    <div class="btns">
+      <button class="btn btn-g" onclick="show('s1')">&larr;</button>
+      <button class="btn" onclick="go2b()">Continue &rarr;</button>
+      <button class="btn-ns" onclick="ns('2b')">Not sure</button>
+    </div>
+    <p class="sched">Not sure? <a href="https://calendly.com/connercherland/phone-call" target="_blank">Schedule a free call with Conner &rarr;</a></p>
+  </div>
+
+  <div class="step" id="s2c">
+    <p class="slabel">Step 2b of 5</p>
+    <p class="qq">Which parts of the day will the band cover?</p>
+    <div class="opts" id="band-coverage-opts"></div>
+    <p class="err" id="e2c">Please select at least one.</p>
+    <div class="btns">
+      <button class="btn btn-g" onclick="show('s2b')">&larr;</button>
+      <button class="btn" onclick="go2c()">Continue &rarr;</button>
+      <button class="btn-ns" onclick="ns('2c')">Not sure</button>
+    </div>
+    <p class="sched">Not sure? <a href="https://calendly.com/connercherland/phone-call" target="_blank">Schedule a free call with Conner &rarr;</a></p>
+  </div>
+
+  <div class="step" id="s3">
+    <p class="slabel">Step 3 of 5</p>
+    <p class="qq">How is your ceremony and cocktail hour arranged?</p>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="setup" value="1" onchange="selR(this)"><div><div class="opt-title">Same location for both</div><div class="opt-sub">I set up once and stay put</div></div></label>
+      <label class="opt"><input type="radio" name="setup" value="2" onchange="selR(this)"><div><div class="opt-title">Different locations</div><div class="opt-sub">Ceremony in one spot, cocktail hour in another</div></div></label>
+    </div>
+    <p class="err" id="e3">Please make a selection.</p>
+    <div class="btns">
+      <button class="btn btn-g" onclick="show('s2')">&larr;</button>
+      <button class="btn" onclick="go3()">Continue &rarr;</button>
+      <button class="btn-ns" onclick="ns(3)">Not sure</button>
+    </div>
+    <p class="sched">Not sure? <a href="https://calendly.com/connercherland/phone-call" target="_blank">Schedule a free call with Conner &rarr;</a></p>
+  </div>
+
+  <div class="step" id="s4">
+    <p class="slabel">Step 4 of 5</p>
+    <p class="qq">Where is your venue?</p>
+    <input class="field" id="f-venue" type="text" placeholder="Venue name or city, state" />
+    <p style="font-size:12px;color:#aaa;margin-top:4px;">Used to estimate travel from Highland Park, CA.</p>
+    <p class="err" id="e4">Please enter a venue location.</p>
+    <div class="loading" id="load4">Estimating travel zone...</div>
+    <div class="btns">
+      <button class="btn btn-g" onclick="back4()">&larr;</button>
+      <button class="btn" id="btn4" onclick="go4()">Continue &rarr;</button>
+      <button class="btn-ns" onclick="ns(4)">Not sure</button>
+    </div>
+    <p class="sched">Not sure? <a href="https://calendly.com/connercherland/phone-call" target="_blank">Schedule a free call with Conner &rarr;</a></p>
+  </div>
+
+  <div class="step" id="s5">
+    <p class="slabel">Step 5 of 5</p>
+    <p class="qq">What's your wedding date?</p>
+    <input class="field" id="f-date" type="date" style="max-width:220px;" onchange="chkDate()" />
+    <div class="unavail" id="unavail">That date is already booked. Please reach out directly -- <a href="/cdn-cgi/l/email-protection#563f38303916353938383324353e33243a3738327835393b" style="color:inherit;"><span class="__cf_email__" data-cfemail="543d3a323b14373b3a3a3126373c312638353a307a373b39">[email&#160;protected]</span></a></div>
+    <p class="err" id="e5">Please select a date.</p>
+    <div class="btns">
+      <button class="btn btn-g" onclick="show('s4')">&larr;</button>
+      <button class="btn" id="btn5" onclick="go5()">Send my info and get a quote &rarr;</button>
+      <button class="btn-ns" onclick="ns(5)">Not sure</button>
+    </div>
+    <p class="sched">Not sure? <a href="https://calendly.com/connercherland/phone-call" target="_blank">Schedule a free call with Conner &rarr;</a></p>
+  </div>
+
+  <div class="step" id="s-ns">
+    <div class="ns-card">
+      <div class="ns-title">No problem at all.</div>
+      <p class="ns-body">Planning a wedding is a lot -- you don't need to have every detail figured out right now. I'm happy to chat through what you're envisioning and find something that fits.</p>
+      <div class="ns-btns">
+        <a class="btn-cal" href="https://calendly.com/connercherland/phone-call" target="_blank">Schedule a free call</a>
+        <a class="btn-tl" href="sms:6614064633">Send me a text</a>
+        <a class="btn-tl" href="/cdn-cgi/l/email-protection#bed7d0d8d1feddd1d0d0dbccddd6dbccd2dfd0da90ddd1d3">Send me an email</a>
+      </div>
+      <div class="lrow" style="margin-top:1.25rem;">
+        <a class="elink" href="https://docs.google.com/spreadsheets/d/1b_jqs3ntIf6oIy042xEPEgo5Ts3d-E1MtrDWc_D52QY/edit?usp=drive_link" target="_blank">&#9834; View my repertoire</a>
+        <a class="elink" href="https://instagram.com/weddingmusicbyconner" target="_blank">&#9825; @weddingmusicbyconner</a>
+      </div>
+    </div>
+    <button class="btn-back-ns" onclick="backNS()">&#8592; Go back and keep going</button>
+  </div>
+
+  <div class="step" id="s-quote">
+    <div style="background:rgba(180,149,106,.1);border:1px solid #B4956A;border-radius:8px;padding:10px 16px;margin-bottom:1.25rem;font-size:14px;color:#6b4f2a;">Your information has been sent to Conner. He will be in touch within 24 hours.</div>
+  <p class="slabel">Your estimate</p>
+    <p class="qq" id="q-greet"></p>
+    <p style="font-size:15px;color:#888;margin-bottom:.75rem;">This is a starting estimate - final pricing confirmed after a quick conversation.</p>
+    <div id="zpill"></div>
+    <div class="qcard">
+      <div class="qprice" id="q-price"></div>
+      <div id="q-travel-note" style="font-size:13px;color:#888;margin-top:4px;margin-bottom:8px;"></div>
+      <div class="qpkg" id="q-pkg"></div>
+      <hr class="qdiv">
+      <div class="ilabel">What's included</div>
+      <div id="q-incl"></div>
+      <div id="q-note"></div>
+    </div>
+    <div class="lrow">
+      <a class="elink" href="https://docs.google.com/spreadsheets/d/1b_jqs3ntIf6oIy042xEPEgo5Ts3d-E1MtrDWc_D52QY/edit?usp=drive_link" target="_blank">&#9834; View my repertoire</a>
+      <a class="elink" href="https://instagram.com/weddingmusicbyconner" target="_blank">&#9825; @weddingmusicbyconner</a>
+    </div>
+    <div class="cta-row">
+      <button class="cta-lnk" onclick="startOver()">Start over</button>
+    </div>
+    <p class="qnote" id="lodging-note" style="display:none;color:#8a6430;margin-bottom:8px;">A lodging fee is possibly included in this estimate - to be confirmed together.</p>
+    
+    <p class="sched" style="margin-top:.75rem;">Not sure? <a href="https://calendly.com/connercherland/phone-call" target="_blank">Schedule a free call with Conner &rarr;</a></p>
+  <div style="margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid #e0dbd4;">
+    <p style="font-size:12px;color:#888;margin-bottom:10px;text-transform:uppercase;letter-spacing:.08em;">Also available</p>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <button class="btn-addon" onclick="toggleAddon('addon-song')">Have a song written just for you &mdash; $500</button>
+      <div id="addon-song" style="display:none;padding:12px 16px;background:#faf9f7;border:1px solid #e0dbd4;border-radius:8px;font-size:14px;color:#444;line-height:1.6;">Conner will write an original song inspired by your love story, delivered as a personal recording and, if desired, performed live at your wedding. <a href="#" onclick="addonEmail('custom-song');return false;" style="color:#B4956A;font-weight:500;">Send Conner an email about this &rarr;</a></div>
+      <button class="btn-addon" onclick="toggleAddon('addon-rec')">Take your wedding music home &mdash; $200</button>
+      <div id="addon-rec" style="display:none;padding:12px 16px;background:#faf9f7;border:1px solid #e0dbd4;border-radius:8px;font-size:14px;color:#444;line-height:1.6;">After your wedding, Conner will record and master a selection of songs he performed, delivered as a private download link. <a href="#" onclick="addonEmail('recording');return false;" style="color:#B4956A;font-weight:500;">Send Conner an email about this &rarr;</a></div>
+    </div>
+  </div>
+  </div>
+</div>
+
+<button class="adm-tog" onclick="togAdm()">Admin: manage blocked dates</button>
+<div class="adm-wrap" id="adm-panel" style="display:none;">
+  <div id="adm-auth">
+    <p class="adm-title">Enter admin password</p>
+    <div style="display:flex;gap:8px;">
+      <input class="field" id="adm-pw" type="password" placeholder="Password" style="margin:0;max-width:240px;" />
+      <button class="btn" onclick="authAdm()">Unlock</button>
+    </div>
+    <p class="err" id="e-pw">Incorrect password.</p>
+  </div>
+  <div id="adm-inner" style="display:none;">
+    <p class="adm-title">Blocked wedding dates</p>
+    <div class="dlist" id="dlist"></div>
+    <div style="display:flex;gap:8px;">
+      <input class="field" id="new-date" type="date" style="margin:0;max-width:180px;" />
+      <bu
+ton class="btn" onclick="addDate()">Add date</button>
+    </div>
+    <p class="err" id="e-adm" style="margin-top:8px;"></p>
+  </div>
+</div>
+<script data-cfasync="false" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBOs_8h6GF9RgmjjLDe2qP4ydh_Fe6fNbk&libraries=places"></script>
+<script data-cfasync="false">
+
+const ADMIN_PW='icombthecrowdandpickyouout';
+const INSTRS=['Drums','Bass','Electric guitar','Stand-up bass','Keyboards','Violin','Cello','Trumpet','Saxophone','Clarinet','Harp','Percussion','Female vocals'];
+const LIVE_PKGS=[
+  {id:'cer',label:'Ceremony - live music only',price:'from $500',pn:'depending on travel',incl:['Live music performance','Wireless mic for officiant','1 off-repertoire song request','Professional sound equipment provided'],sq:false},
+  {id:'cock',label:'Cocktail hour only',price:'from $750',pn:'',incl:['Live ambient music during cocktail hour','Professional sound equipment provided'],sq:false},
+  {id:'cer-cock',label:'Ceremony + cocktail hour',price:'from $800',pn:'depending on setup',incl:['Live music performance','Wireless mic for officiant','1 off-repertoire song request','Live cocktail hour coverage','Professional sound equipment provided'],sq:true},
+  {id:'cer-cock-din',label:'Ceremony + cocktail hour + dinner music',price:'from $1,600',pn:'ideal for intimate weddings',incl:['Live music performance','Wireless mic for officiant','1 off-repertoire song request','Live cocktail hour coverage','Background dinner music','Professional sound equipment provided'],sq:true},
+  {id:'cock-din',label:'Cocktail hour + dinner music (no ceremony)',price:'from $1,200',pn:'',incl:['Live ambient music during cocktail hour','Background dinner music','Professional sound equipment provided'],sq:false},
+];
+const DJ_PKGS=[
+  {id:'dj-rec',label:'DJ / emcee - reception only',price:'from $2,500',pn:'',incl:['Full DJ reception coverage','MC duties and announcements','Professional sound system provided'],sq:false},
+  {id:'dj-full',label:'DJ / emcee - full day',price:'from $3,000',pn:'',incl:['Full-day DJ and emcee coverage','MC duties and announcements','Professional sound system provided'],sq:false},
+  {id:'dj-cer',label:'DJ / emcee + ceremony live music',price:'from $3,000',pn:'live music included at no extra cost',incl:['Live music performance','Wireless mic for officiant','1 off-repertoire song request','Full DJ and emcee coverage','Professional sound equipment provided'],sq:false},
+  {id:'full',label:'Full package - ceremony, cocktail hour + DJ / emcee',price:'from $3,500',pn:'additional equipment needs may apply',incl:['Live music performance','Wireless mic for officiant','1 off-repertoire song request','Live cocktail hour coverage','Full DJ and emcee reception coverage','Professional sound equipment provided'],sq:true},
+];
+
+let ST={name:'',email:'',phone:'',cats:[],soloPkg:null,djPkg:null,pkg:null,soloParts:[],djParts:[],bandInstrs:[],setup:1,bandCoverage:'',venue:'',miles:0,driveMins:0,date:'',multiMode:false};
+let blocked=[];
+let prevNS=1;
+let isBand=false;
+let skipSetup=false;
+
+function prog(n){document.getElementById('prog').style.width=Math.round((n/5)*100)+'%';}
+function show(id){
+  document.querySelectorAll('.step').forEach(function(s){s.classList.remove('active');});
+  document.getElementById(id).classList.add('active');
+  var mp={s0:0,s1:1,s2:2,'s2b':2,s3:3,s4:4,s5:5};
+  if(mp[id]!==undefined)prog(mp[id]);
+}
+function herr(id){var e=document.getElementById(id);if(e)e.style.display='none';}
+function serr(id,m){var e=document.getElementById(id);if(e){e.style.display='block';if(m)e.textContent=m;}}
+function ns(from){prevNS=from;show('s-ns');}
+function backNS(){show(typeof prevNS==='number'?'s'+prevNS:'s'+prevNS);}
+function selCat(el){
+  var parent=el.closest('.cat-card')||el.closest('.opt');
+  if(parent)parent.classList.toggle('sel',el.checked);
+}
+function selR(el){document.querySelectorAll('input[name="'+el.name+'"]').forEach(function(r){r.closest('.opt').classList.toggle('sel',r.checked);});}
+
+function buildInstrs(){
+  var g=document.getElementById('instr-grid');g.innerHTML='';
+  INSTRS.forEach(function(inst){
+    var l=document.createElement('label');l.className='ichip';
+    l.innerHTML='<input type="checkbox" name="instr" value="'+inst+'" onchange="togInstr(this)"><span class="ichip-label">'+inst+'</span>';
+    g.appendChild(l);
+  });
+}
+function togInstr(el){el.closest('.ichip').classList.toggle('sel',el.checked);updBand();}
+function getSel(){return Array.from(document.querySelectorAll('input[name="instr"]:checked')).map(function(x){return x.value;});}
+function updBand(){
+  var sel=getSel();var tot=sel.length+1;
+  var el=document.getElementById('band-sum');
+  if(!sel.length){el.textContent='';return;}
+  el.textContent=tot+' musicians (including Conner) - starting from $'+(tot*750).toLocaleString();
+}
+
+function buildSoloPkgs(){
+  var w=document.getElementById('solo-pkg-opts');w.innerHTML='';
+  LIVE_PKGS.forEach(function(p){
+    var l=document.createElement('label');l.className='opt';
+    var popular=p.id==='cer-cock'?'<div class="opt-popular">Most popular</div>':'';
+    l.innerHTML='<input type="radio" name="solo-pkg" value="'+p.id+'" onchange="selR(this)"><div>'+popular+'<div class="opt-title">'+p.label+'</div>'+(p.pn?'<div class="opt-sub">'+p.pn+'</div>':'')+'<div class="opt-price">'+p.price+'</div></div>';
+    w.appendChild(l);
+  });
+}
+function buildDJPkgs(){
+  var w=document.getElementById('dj-pkg-opts');w.innerHTML='';
+  DJ_PKGS.forEach(function(p){
+    var l=document.createElement('label');l.className='opt';
+    l.innerHTML='<input type="radio" name="dj-pkg" value="'+p.id+'" onchange="selR(this)"><div><div class="opt-title">'+p.label+'</div>'+(p.pn?'<div class="opt-sub">'+p.pn+'</div>':'')+'<div class="opt-price">'+p.price+'</div></div>';
+    w.appendChild(l);
+  });
+}
+function goSoloPkg(){
+  herr('e2-solo');
+  var r=document.querySelector('input[name="solo-pkg"]:checked');
+  if(!r){serr('e2-solo');return;}
+  ST.soloPkg=LIVE_PKGS.filter(function(p){return p.id===r.value;})[0];
+  var cats=ST.cats;
+  var hasDJ=cats.indexOf('dj')>-1;
+  var hasBand=cats.indexOf('band')>-1;
+  if(hasDJ){buildDJPkgs();show('s2-dj');}
+  else if(hasBand){show('s2b');}
+  else{show('s4');}
+}
+function bandHasMinForReception(){
+  var instrs=ST.bandInstrs||[];
+  var hasBass=instrs.indexOf('Bass')>-1;
+  var hasDrums=instrs.indexOf('Drums')>-1;
+  var others=instrs.filter(function(i){return i!=='Bass'&&i!=='Drums';});
+  return hasBass&&hasDrums&&others.length>=1;
+}
+function buildBandCoverage(){
+  var w=document.getElementById('band-coverage-opts');
+  if(!w)return;
+  w.innerHTML='';
+  var soloParts=ST.soloParts||[];
+  var canDoReception=bandHasMinForReception();
+  var allParts=[
+    {value:'cer',label:'Ceremony',sub:'Band performs for processional, recessional, and as guests arrive'},
+    {value:'cock',label:'Cocktail hour',sub:'Band performs while guests mingle'},
+    {value:'din',label:'Dinner music',sub:'Band provides background music during the meal'},
+    {value:'rec',label:'Reception',sub:'Full live band for dancing and celebration',reqMsg:'Requires bass, drums, and at least one additional instrument'},
+    {value:'full',label:'Full day coverage',sub:'Band covers all parts of the day'}
+  ];
+  allParts.forEach(function(p){
+    if(soloParts.indexOf(p.value)>-1)return;
+    if(p.value==='full'&&soloParts.length>0)return;
+    var l=document.createElement('label');l.className='opt';
+    if(p.value==='rec'&&!canDoReception){
+      l.style.opacity='0.5';l.style.cursor='default';
+      l.innerHTML='<input type="checkbox" name="band-parts" value="'+p.value+'" disabled><div><div class="opt-title">'+p.label+'</div><div class="opt-sub">'+p.sub+'</div><div class="opt-sub" style="color:#B4956A;margin-top:4px;">'+p.reqMsg+'</div></div>';
+    } else {
+      l.innerHTML='<input type="checkbox" name="band-parts" value="'+p.value+'" onchange="selCat(this)"><div><div class="opt-title">'+p.label+'</div><div class="opt-sub">'+p.sub+'</div></div>';
+    }
+    w.appendChild(l);
+  });
+}
+function buildDJParts(){
+  var w=document.getElementById('dj-parts-opts');w.innerHTML='';
+  var soloParts=ST.soloParts||[];
+  var allParts=[
+    {value:'cock',label:'Cocktail hour',sub:'Curated playlist',price:'$300'},
+    {value:'din',label:'Dinner',sub:'Curated playlist',price:'$300'},
+    {value:'rec',label:'Reception',sub:'Full DJ set with MC and announcements',price:'$2,500'}
+  ];
+  allParts.forEach(function(p){
+    // Skip parts already covered by solo acoustic
+    var soloMap={cock:'cock',din:'din'};
+    if(soloMap[p.value]&&soloParts.indexOf(soloMap[p.value])>-1)return;
+    var l=document.createElement('label');l.className='opt';
+    l.innerHTML='<input type="checkbox" name="dj-parts" value="'+p.value+'" onchange="selCat(this)"><div><div class="opt-title">'+p.label+'</div><div class="opt-sub">'+p.sub+'</div><div class="opt-price">'+p.price+'</div></div>';
+    w.appendChild(l);
+  });
+}
+function goDJParts(){
+  herr('e2-dj');
+  var parts=Array.from(document.querySelectorAll('input[name="dj-parts"]:checked')).map(function(x){return x.value;});
+  if(!parts.length){serr('e2-dj');return;}
+  ST.djParts=parts;
+  var hasBand=ST.cats.indexOf('band')>-1;
+  if(hasBand){show('s2b');}
+  else{show('s4');}
+}
+function goDJPkg(){
+  herr('e2-dj');
+  var r=document.querySelector('input[name="dj-pkg"]:checked');
+  if(!r){serr('e2-dj');return;}
+  ST.djPkg=DJ_PKGS.filter(function(p){return p.id===r.value;})[0];
+  var hasBand=ST.cats.indexOf('band')>-1;
+  if(hasBand){show('s2b');}
+  else{show('s4');}
+}
+function backDJStep(){
+  var hasLive=ST.cats.indexOf('live')>-1;
+  if(hasLive)show('s2-solo');
+  else show('s1');
+}
+function buildPkgs(cats){
+  var w=document.getElementById('pkg-opts');w.innerHTML='';
+  var hasLive=cats.indexOf('live')>-1;
+  var hasDJ=cats.indexOf('dj')>-1;
+  var hasBand=cats.indexOf('band')>-1;
+  var pkgs=[];
+  if((hasLive||hasBand)&&!hasDJ)pkgs=LIVE_PKGS;
+  else if(hasDJ&&!hasLive&&!hasBand)pkgs=DJ_PKGS;
+  else pkgs=LIVE_PKGS.concat(DJ_PKGS);
+  pkgs.forEach(function(p){
+    var l=document.createElement('label');l.className='opt';
+    var popular=p.id==='cer-cock'?'<div class="opt-popular">Most popular</div>':'';
+    l.innerHTML='<input type="radio" name="pkg" value="'+p.id+'" onchange="selR(this)"><div>'+popular+'<div class="opt-title">'+p.label+'</div>'+(p.pn?'<div class="opt-sub">'+p.pn+'</div>':'')+'<div class="opt-price">'+p.price+'</div></div>';
+    w.appendChild(l);
+  });
+}
+
+function go0(){
+  herr('e0');
+  var n=document.getElementById('f-name').value.trim();
+  var e=document.getElementById('f-email').value.trim();
+  var p=document.getElementById('f-phone').value.trim();
+  if(!n||!e||e.indexOf('@')<0||!p){serr('e0');return;}
+  ST.name=n;ST.email=e;ST.phone=p;show('s1');
+}
+function go1(){
+  herr('e1');
+  var cats=Array.from(document.querySelectorAll('input[name="cat"]:checked')).map(function(x){return x.value;});
+  if(!cats.length){serr('e1');return;}
+  ST.cats=cats;
+  ST.multiMode=cats.length>1;
+  var hasLive=cats.indexOf('live')>-1;
+  var hasDJ=cats.indexOf('dj')>-1;
+  var hasBand=cats.indexOf('band')>-1;
+  isBand=hasBand&&cats.length===1;
+
+  if(hasLive){show('s2');return;}
+  if(hasDJ&&!hasLive){buildDJParts();show('s2-dj');return;}
+  if(isBand){show('s2b');return;}
+  show('s2');
+}
+function go2(){
+  herr('e2');
+  var parts=Array.from(document.querySelectorAll('input[name="solo-parts"]:checked')).map(function(x){return x.value;});
+  if(!parts.length){serr('e2');return;}
+  ST.soloParts=parts;
+  ST.setup=parts.indexOf('cer')>-1&&parts.indexOf('cock')>-1?2:1;
+  var cats=ST.cats;
+  var hasDJ=cats.indexOf('dj')>-1;
+  var hasBand=cats.indexOf('band')>-1;
+  if(hasDJ){buildDJParts();show('s2-dj');}
+  else if(hasBand){show('s2b');}
+  else{show('s4');}
+}
+function go2b(){
+  herr('e2b');
+  var sel=getSel();
+  if(!sel.length){serr('e2b');return;}
+  ST.bandInstrs=sel;ST.pkg=null;buildBandCoverage();show('s2c');
+}
+function go2c(){
+  herr('e2c');
+  var parts=Array.from(document.querySelectorAll('input[name="band-parts"]:checked')).map(function(x){return x.value;});
+  if(!parts.length){serr('e2c');return;}
+  ST.bandCoverage=parts.indexOf('full')>-1?'full':parts.indexOf('rec')>-1&&parts.length===1?'rec':parts.join('-');
+  ST.bandParts=parts;
+  show('s4');
+}
+function back4(){
+  var cats=ST.cats||[];
+  var hasBand=cats.indexOf('band')>-1;
+  var hasDJ=cats.indexOf('dj')>-1;
+  var hasLive=cats.indexOf('live')>-1;
+  if(hasBand)show('s2b');
+  else if(hasDJ)show('s2-dj');
+  else if(hasLive)show('s2');
+  else if(isBand)show('s2b');
+  else show('s3');
+}
+function go3(){
+  herr('e3');
+  var r=document.querySelector('input[name="setup"]:checked');
+  if(!r){serr('e3');return;}
+  ST.setup=parseInt(r.value);show('s4');
+}
+function go4(){
+  herr('e4');
+  var v=document.getElementById('f-venue').value.trim();
+  if(!v){serr('e4');return;}
+  ST.venue=v;
+  document.getElementById('load4').style.display='block';
+  document.getElementById('btn4').disabled=true;
+  var svc=new google.maps.DistanceMatrixService();
+  svc.getDistanceMatrix({
+    origins:['Highland Park, Los Angeles, CA 90042'],
+    destinations:[v],
+    travelMode:google.maps.TravelMode.DRIVING,
+    unitSystem:google.maps.UnitSystem.IMPERIAL
+  },function(res,status){
+    if(status==='OK'&&res.rows[0].elements[0].status==='OK'){
+      var el=res.rows[0].elements[0];
+      var oneway=Math.round(el.distance.value/1609.34);
+      ST.miles=oneway*2;
+      ST.driveMins=Math.round(el.duration.value/60);
+    } else {
+      ST.miles=0;ST.driveMins=60;
+    }
+    document.getElementById('load4').style.display='none';
+    document.getElementById('btn4').disabled=false;
+    show('s5');
+  });
+}
+function chkDate(){
+  var d=document.getElementById('f-date').value;
+  var bann=document.getElementById('unavail');var btn=document.getElementById('btn5');
+  if(blocked.indexOf(d)>-1){bann.style.display='block';btn.disabled=true;}
+  else{bann.style.display='none';btn.disabled=false;}
+}
+function go5(){
+  herr('e5');
+  var d=document.getElementById('f-date').value;
+  if(!d){serr('e5');return;}
+  if(blocked.indexOf(d)>-1)return;
+  ST.date=d;buildQuote();show('s-quote');
+  submitToGoogleForm();
+}
+function getZone(){
+  var mins=ST.driveMins||0;
+  if(mins<=30)return 1;
+  if(mins<=74)return 2;
+  if(mins<=115)return 3;
+  return 4;
+}
+function getSoloPrice(parts,bump){
+  var hasCer=parts.indexOf('cer')>-1;
+  var haCock=parts.indexOf('cock')>-1;
+  var haDin=parts.indexOf('din')>-1;
+  if(hasCer&&haCock&&haDin)return 1600+bump;
+  if(hasCer&&haCock){
+    // Check setup count
+    return ST.setup===2?(1000+bump):(800+bump);
+  }
+  if(hasCer&&haDin)return 1300+bump;
+  if(haCock&&haDin)return 1400+bump;
+  if(hasCer)return 500+bump;
+  if(haCock)return 750+bump;
+  if(haDin)return 800+bump;
+  return 500+bump;
+}
+function getDJPrice(parts,bump){
+  var total=0;
+  if(parts.indexOf('cock')>-1)total+=300;
+  if(parts.indexOf('din')>-1)total+=300;
+  if(parts.indexOf('rec')>-1)total+=2500;
+  return total+bump;
+}
+function getPrice(){
+  var zone=getZone();
+  var bumps={1:0,2:50,3:100,4:0};
+  var bump=bumps[zone];
+  var miles=ST.miles||0;
+  var driveMins=ST.driveMins||0;
+  var driveHrs=driveMins/60;
+  var mileRate=miles>=300?0.50:0.40;
+  var rawTravel=zone===4?Math.round(miles*mileRate/25)*25:0;
+  var rawDriveTime=zone===4?Math.round(driveHrs*25/25)*25:0;
+  var opportunityCost=miles>=300?500:0;
+  var totalAddOn=rawTravel+rawDriveTime+opportunityCost;
+  var tstr=totalAddOn>0?'Includes $'+totalAddOn.toLocaleString()+' for travel & drive time':'';
+
+  var cats=ST.cats;
+  var hasLive=cats.indexOf('live')>-1;
+  var hasDJ=cats.indexOf('dj')>-1;
+  var hasBand=cats.indexOf('band')>-1;
+
+  var lines=[];
+  var total=0;
+
+  if(hasLive&&ST.soloParts&&ST.soloParts.length){
+    var sp=getSoloPrice(ST.soloParts,bump);
+    var partLabels={cer:'Ceremony',cock:'Cocktail hour',din:'Dinner music'};
+    var pLabel=ST.soloParts.map(function(p){return partLabels[p]||p;}).join(' + ');
+    lines.push('Solo acoustic ('+pLabel+'): $'+sp.toLocaleString());
+    total+=sp;
+  }
+
+  if(hasDJ&&ST.djParts&&ST.djParts.length){
+    var dp=getDJPrice(ST.djParts,bump);
+    var djLabels={cock:'Cocktail hour',din:'Dinner',rec:'Reception'};
+    var dLabel=ST.djParts.map(function(p){return djLabels[p]||p;}).join(' + ');
+    lines.push('DJ / emcee ('+dLabel+'): $'+dp.toLocaleString());
+    total+=dp;
+  }
+
+  if(hasBand&&ST.bandInstrs.length){
+    var coverageBases={cer:500,cock:750,'cer-cock':1000,'cer-cock-din':1600,rec:1200,full:3000};
+    var cb=coverageBases[ST.bandCoverage]||800;
+    var bandExtra=(ST.bandInstrs||[]).length*750;
+    var bt=cb+bump+bandExtra;
+    lines.push('Live band ('+ST.bandInstrs.length+' additional musicians): $'+bt.toLocaleString());
+    total+=bt;
+  }
+
+  // Single category fallback
+  if(!hasLive&&!hasDJ&&!hasBand){
+    var p=ST.pkg;
+    if(isBand||!p){
+      var tot=(ST.bandInstrs||[]).length;
+      var coverageBases={cer:500,cock:750,'cer-cock':800,'cer-cock-din':1600,rec:1200,full:3000};
+      var coverageBase=coverageBases[ST.bandCoverage]||800;
+      var t=coverageBase+bump+(tot*750)+totalAddOn;
+      var r=zone===4?Math.round(t/25)*25:t;
+      return {lines:[],total:'$'+r.toLocaleString(),travelNote:tstr};
+    }
+    var bases={cer:500,cock:750,'cer-cock':800,'cer-cock-din':1600,'cock-din':1200,'dj-rec':2500,'dj-full':3000,'dj-cer':3000,full:3500};
+    if(p.id==='cer-cock'&&ST.setup===2)bases['cer-cock']=1000;
+    var base=bases[p.id]||0;
+    var t=base+bump+totalAddOn;
+    var r=zone===4?Math.round(t/25)*25:t;
+    return {lines:[],total:'$'+r.toLocaleString(),travelNote:tstr};
+  }
+
+  total+=totalAddOn;
+  var roundedTotal=zone===4?Math.round(total/25)*25:total;
+  if(lines.length>1){
+    return {lines:lines,total:'Total: $'+roundedTotal.toLocaleString(),travelNote:tstr};
+  }
+  return {lines:[],total:'$'+roundedTotal.toLocaleString(),travelNote:tstr};
+}
+
+function buildQuote(){
+  var name=ST.name||'';
+  var fn=name.trim().split(' ')[0]||name.trim()||'there';
+  document.getElementById('q-greet').textContent="Here's what I'd typically quote for your day, "+fn+".";
+  var zl={1:'Local (under 30 min)',2:'Nearby (31-74 min)',3:'Santa Barbara area (75-115 min)',4:'Long-distance (2+ hrs)'};
+  var zone=getZone();
+  var ztext=zl[zone]||'';
+  var mtext=ST.miles?'('+ST.miles+' mi round trip)':'';
+  var pillParts=[ztext,mtext].filter(Boolean).join(' ');
+  document.getElementById('zpill').innerHTML=pillParts?'<div class="zpill">'+pillParts+'</div>':'';
+  var priceResult=getPrice();
+  var tnEl=document.getElementById('q-travel-note');
+  if(tnEl)tnEl.textContent=priceResult.travelNote||'';
+  if(priceResult.lines&&priceResult.lines.length){
+    var linesHTML=priceResult.lines.map(function(l){return '<div class="iitem"><div class="idot"></div><div>'+l+'</div></div>';}).join('');
+    document.getElementById('q-price').innerHTML='<div style="font-size:15px;color:#888;margin-bottom:8px;">Breakdown</div>'+linesHTML+'<div style="font-size:36px;font-weight:400;margin-top:12px;">'+priceResult.total+'</div>';
+    if(tnEl)tnEl.textContent=priceResult.travelNote||'';
+  } else {
+    document.getElementById('q-price').textContent=priceResult.total;
+  }
+  var lodgingNote=document.getElementById('lodging-note');
+  if(lodgingNote){
+    if((ST.miles||0)>=300){
+      lodgingNote.style.display='block';
+    } else {
+      lodgingNote.style.display='none';
+    }
+  }
+  var lbl='';var incl=[];var note='';
+  if(isBand||(!ST.pkg&&ST.bandInstrs.length)){
+    var tot=ST.bandInstrs.length+1;
+    var coverageLabels={cer:'ceremony',cock:'cocktail hour','cer-cock':'ceremony + cocktail hour','cer-cock-din':'ceremony + cocktail + dinner',rec:'reception',full:'full day'};
+    lbl='Live band - '+tot+' musicians'+(ST.bandCoverage&&coverageLabels[ST.bandCoverage]?' ('+coverageLabels[ST.bandCoverage]+')':'');
+    incl=['Conner as band leader (acoustic guitar / vocals)'].concat((ST.bandInstrs||[]).map(function(i){return i+' player';})).concat(['Professional sound equipment provided','2 band rehearsals','Travel and logistics coordination']);
+    note='Band pricing is a starting estimate: '+tot+' musicians at $750 each. Final quote confirmed after a quick conversation.';
+  } else if(ST.soloParts&&ST.soloParts.length){
+    var partLabels2={cer:'Ceremony',cock:'Cocktail hour',din:'Dinner music'};
+    var soloLabel=ST.soloParts.map(function(p){return partLabels2[p]||p;}).join(' + ');
+    lbl='Solo acoustic: '+soloLabel;
+    if(ST.djParts&&ST.djParts.length){
+      var djLabels2={cock:'Cocktail hour',din:'Dinner',rec:'Reception'};
+      lbl+=' | DJ: '+ST.djParts.map(function(p){return djLabels2[p]||p;}).join(' + ');
+    }
+    // Build inclusions from solo parts
+    incl=[];
+    if(ST.soloParts.indexOf('cer')>-1){incl.push('Live music performance');incl.push('Wireless mic for officiant');incl.push('1 off-repertoire song request');}
+    if(ST.soloParts.indexOf('cock')>-1)incl.push('Live cocktail hour coverage');
+    if(ST.soloParts.indexOf('din')>-1)incl.push('Background dinner music');
+    if(ST.djParts&&ST.djParts.indexOf('rec')>-1)incl.push('Full DJ set with MC and announcements');
+    if(ST.djParts&&(ST.djParts.indexOf('cock')>-1||ST.djParts.indexOf('din')>-1))incl.push('Curated playlist coverage');
+    incl.push('Professional sound equipment provided');
+  } else if(ST.pkg){
+    lbl=ST.pkg.label;
+    if(ST.pkg.sq&&ST.pkg.id!=='full')lbl+=ST.setup===1?' (same location)':' (separate locations)';
+    incl=ST.pkg.incl;
+    if(ST.pkg.id==='full')note='Additional equipment needs (lighting, lapel mics) may affect final pricing.';
+  }
+  if(ST.date){
+    var dt=new Date(ST.date+'T12:00:00');
+    lbl+=' | '+dt.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+  }
+  document.getElementById('q-pkg').textContent=lbl;
+  document.getElementById('q-incl').innerHTML=incl.map(function(i){return '<div class="iitem"><div class="idot"></div><div>'+i+'</div></div>';}).join('');
+  document.getElementById('q-note').innerHTML=note?'<p class="qnote" style="margin-top:12px;">'+note+'</p>':'';
+}
+function submitToGoogleForm(){
+  var FORM_ID='1FAIpQLSe9X-RsA7NKxA8GCjmlcr85i-RlQSEr0fOHgzSAjAdhlgN_9A';
+  var svc=isBand?'Live band ('+( ST.bandInstrs.length+1)+' musicians: Conner, '+ST.bandInstrs.join(', ')+')':( ST.pkg?ST.pkg.label:'N/A');
+  var zl={1:'Local (under 30 min)',2:'Nearby (31-74 min)',3:'Santa Barbara area (75-115 min)',4:'Long-distance (2+ hrs)'};
+  var setupLabel=ST.pkg&&ST.pkg.sq?(ST.setup===1?'Same location':'Separate locations'):'N/A';
+  var params=new URLSearchParams();
+  params.append('entry.1503499766',ST.email);
+  params.append('entry.1810494856',ST.name);
+  params.append('entry.1554710627',ST.phone);
+  params.append('entry.147289212',ST.date);
+  params.append('entry.1810531719',ST.venue);
+  params.append('entry.552911332',svc);
+  params.append('entry.687933710',ST.bandInstrs.length?ST.bandInstrs.join(', '):'N/A');
+  params.append('entry.715197167',zl[getZone()]||'');
+  params.append('entry.1443677138',setupLabel);
+  var url='https://docs.google.com/forms/d/e/'+FORM_ID+'/formResponse';
+  fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:params.toString()}).catch(function(){});
+}
+function contact(){
+  var svc=isBand?'Live band ('+ST.bandInstrs.length+' musicians: Conner, '+ST.bandInstrs.join(', ')+')':( ST.pkg?ST.pkg.label:'');
+  var d=ST.date?new Date(ST.date+'T12:00:00').toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}):'TBD';
+  var sub=encodeURIComponent('Wedding music inquiry');
+  var body=encodeURIComponent('Hi Conner,\n\nMy name is '+ST.name+' and I am interested in booking you for my wedding on '+d+'.\n\nVenue: '+ST.venue+'\nPackage: '+svc+'\nPhone: '+ST.phone+'\n\nLooking forward to hearing from you!');
+  window.open('mailto:info@connercherland.com?subject='+sub+'&body='+body);
+}
+function startOver(){
+  ST={name:'',email:'',phone:'',cats:[],soloPkg:null,djPkg:null,pkg:null,soloParts:[],djParts:[],bandParts:[],setup:1,bandCoverage:'',venue:'',miles:0,driveMins:0,date:'',multiMode:false};
+  isBand=false;skipSetup=false;
+  document.querySelectorAll('input[type=radio],input[type=checkbox]').forEach(function(el){el.checked=false;});
+  document.querySelectorAll('.opt,.cat-card,.ichip').forEach(function(el){el.classList.remove('sel');});
+  ['f-name','f-email','f-phone','f-venue','f-date'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('unavail').style.display='none';
+  document.getElementById('btn5').disabled=false;
+  document.getElementById('band-sum').textContent='';
+  show('s0');
+}
+function toggleAddon(id){
+  var el=document.getElementById(id);
+  if(el)el.style.display=el.style.display==='none'?'block':'none';
+}
+function addonEmail(type){
+  var name=ST.name||'';
+  var date=ST.date?new Date(ST.date+'T12:00:00').toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}):'TBD';
+  if(type==='custom-song'){
+    var sub=encodeURIComponent('Interested in a custom song - '+name+' wedding');
+    var body=encodeURIComponent('Hi Conner, I am interested in having a custom song written for our wedding on '+date+'. Name: '+name+' Phone: '+(ST.phone||''));
+    window.open('mailto:info@connercherland.com?subject='+sub+'&body='+body);
+  } else {
+    var sub=encodeURIComponent('Interested in a wedding recording - '+name+' wedding');
+    var body=encodeURIComponent('Hi Conner, I am interested in a recording of the songs played at our wedding on '+date+'. Name: '+name+' Phone: '+(ST.phone||''));
+    window.open('mailto:info@connercherland.com?subject='+sub+'&body='+body);
+  }
+}
+function togAdm(){var p=document.getElementById('adm-panel');p.style.display=p.style.display==='none'?'block':'none';}
+function authAdm(){
+  if(document.getElementById('adm-pw').value===ADMIN_PW){
+    document.getElementById('adm-auth').style.display='none';
+    document.getElementById('adm-inner').style.display='block';
+    loadDates();
+  }else{document.getElementById('e-pw').style.display='block';}
+}
+function loadDates(){
+  try{var s=localStorage.getItem('blocked_dates');blocked=s?JSON.parse(s):[];}
+  catch(e){blocked=[];}
+  renderDates();
+}
+function saveDates(){try{localStorage.setItem('blocked_dates',JSON.stringify(blocked));}catch(e){}}
+function renderDates(){
+  var l=document.getElementById('dlist');
+  if(!blocked.length){l.innerHTML='<div style="font-size:13px;color:#aaa;">No blocked dates yet.</div>';return;}
+  l.innerHTML=blocked.map(function(d){
+    var f=new Date(d+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'long',day:'numeric',year:'numeric'});
+    return '<div class="ditem"><span>'+f+'</span><button class="ddel" onclick="remDate(\''+d+'\')">x</button></div>';
+  }).join('');
+}
+function addDate(){
+  var d=document.getElementById('new-date').value;
+  var e=document.getElementById('e-adm');e.style.display='none';
+  if(!d){e.textContent='Please select a date.';e.style.display='block';return;}
+  if(blocked.indexOf(d)>-1){e.textContent='Already blocked.';e.style.display='block';return;}
+  blocked.push(d);blocked.sort();saveDates();
+  document.getElementById('new-date').value='';renderDates();
+}
+function remDate(d){
+  blocked=blocked.filter(function(x){return x!==d;});saveDates();renderDates();
+}
+buildInstrs();loadDates();
+
+function initAutocomplete(){
+  var input=document.getElementById('f-venue');
+  if(!input||input._acDone)return;
+  input._acDone=true;
+  var ac=new google.maps.places.Autocomplete(input,{
+    types:['establishment','geocode'],
+    fields:['formatted_address','name','geometry']
+  });
+  ac.addListener('place_changed',function(){
+    var place=ac.getPlace();
+    if(place.name&&place.formatted_address){
+      input.value=place.name+', '+place.formatted_address;
+    } else if(place.formatted_address){
+      input.value=place.formatted_address;
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded',function(){
+  var input=document.getElementById('f-venue');
+  if(input){
+    input.addEventListener('focus',function(){
+      if(window.google&&google.maps&&google.maps.places){
+        initAutocomplete();
+      }
+    });
+  }
+});
+
+</script>
+</body>
+</html>
